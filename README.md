@@ -15,7 +15,7 @@ Self-hosted AI security testing with a local Web UI, live agent telemetry, verif
 
 ---
 
-## Quick Start
+## 快速安装
 
 ```bash
 git clone https://github.com/Singtreb/Sword-Riding.git
@@ -31,13 +31,13 @@ XALGORIX_LLM=minimax/MiniMax-M2.7
 XALGORIX_API_KEY=your_provider_api_key
 ```
 
-Start the dashboard:
+启动web界面:
 
 ```bash
 Sword-Riding --web
 ```
 
-Open `http://127.0.0.1:9137`.
+打开 `http://127.0.0.1:9137`.
 
 > [!IMPORTANT]
 > Use Xalgorix only on systems you own or have explicit permission to test.
