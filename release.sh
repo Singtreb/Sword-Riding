@@ -12,7 +12,7 @@ set -euo pipefail
 # directly on main), so the PR merges cleanly without version-string conflicts.
 
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
-MAIN_GO="$REPO_ROOT/cmd/xalgorix/main.go"
+MAIN_GO="$REPO_ROOT/cmd/Sword-Riding/main.go"
 MAKEFILE="$REPO_ROOT/Makefile"
 README="$REPO_ROOT/README.md"
 BUILD_DIR="/tmp/xalgorix-release"
@@ -197,9 +197,9 @@ info "Building linux/amd64 release binary..."
 mkdir -p "$BUILD_DIR"
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
     -ldflags "-s -w -X main.version=$NEW_VERSION" \
-    -o "$BUILD_DIR/xalgorix-linux-amd64" \
+    -o "$BUILD_DIR/Sword-Riding-linux-amd64" \
     ./cmd/xalgorix/
-ok "Binary built: $BUILD_DIR/xalgorix-linux-amd64"
+ok "Binary built: $BUILD_DIR/Sword-Riding-linux-amd64"
 
 # ─── Step 5: Generate changelog (commits since last tag) ───
 info "Generating changelog..."

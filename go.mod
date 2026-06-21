@@ -1,4 +1,4 @@
-module github.com/xalgord/xalgorix/v4
+module github.com/Singtreb/Sword-Riding/v4
 
 go 1.24.2
 

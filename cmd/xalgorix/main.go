@@ -113,7 +113,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "❌ Failed to fetch latest version from GitHub\n")
 			fmt.Fprintf(os.Stderr, "   This is usually caused by GitHub API rate limiting (60 req/hour for unauthenticated users).\n")
 			fmt.Fprintf(os.Stderr, "   Try again in a few minutes, or update manually:\n")
-			fmt.Fprintf(os.Stderr, "   wget -O $(which xalgorix) https://github.com/xalgord/xalgorix/releases/latest/download/xalgorix-linux-amd64\n")
+			fmt.Fprintf(os.Stderr, "   wget -O $(which Sword-Riding) https://github.com/Singtreb/Sword-Riding/releases/latest/download/Sword-Riding-linux-amd64\n")
 			os.Exit(1)
 		}
 
@@ -867,7 +867,7 @@ func execRestart(path string, argv, env []string) error {
 func fetchLatestRelease() (version string, downloadURL string) {
 	client := &http.Client{Timeout: 15 * time.Second}
 
-	req, err := http.NewRequest("GET", "https://api.github.com/repos/xalgord/xalgorix/releases/latest", nil)
+	req, err := http.NewRequest("GET", "https://api.github.com/repos/Singtreb/Sword-Riding/releases/latest", nil)
 	if err != nil {
 		return "", ""
 	}
@@ -907,9 +907,9 @@ func fetchLatestRelease() (version string, downloadURL string) {
 		return "", ""
 	}
 
-	wantName := fmt.Sprintf("xalgorix-%s-%s", runtime.GOOS, runtime.GOARCH)
+	wantName := fmt.Sprintf("Sword-Riding-%s-%s", runtime.GOOS, runtime.GOARCH)
 	for _, asset := range release.Assets {
-		if asset.Name == wantName || asset.Name == "xalgorix" {
+		if asset.Name == wantName || asset.Name == "Sword-Riding" {
 			return ver, asset.BrowserDownloadURL
 		}
 	}
@@ -947,8 +947,8 @@ func fetchLatestTag(client *http.Client) (string, string) {
 		return "", ""
 	}
 
-	wantName := fmt.Sprintf("xalgorix-%s-%s", runtime.GOOS, runtime.GOARCH)
-	downloadURL := fmt.Sprintf("https://github.com/xalgord/xalgorix/releases/download/v%s/%s", ver, wantName)
+	wantName := fmt.Sprintf("Sword-Riding-%s-%s", runtime.GOOS, runtime.GOARCH)
+	downloadURL := fmt.Sprintf("https://github.com/Singtreb/Sword-Riding/releases/download/v%s/%s", ver, wantName)
 	return ver, downloadURL
 }
 
