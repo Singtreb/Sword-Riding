@@ -1,6 +1,6 @@
 .PHONY: build run clean test test-ci test-cover test-race install fmt vet lint tidy all webui webui-install webui-dev
 
-BINARY=xalgorix
+BINARY=Sword-Riding
 BUILD_DIR=./build
 VERSION=4.5.33
 LDFLAGS=-ldflags "-s -w -X main.version=$(VERSION)"
@@ -22,11 +22,11 @@ webui-dev: webui/node_modules
 build: webui
 	@echo "Building $(BINARY)..."
 	@mkdir -p $(BUILD_DIR)
-	go build $(LDFLAGS) -o $(BUILD_DIR)/$(BINARY) ./cmd/xalgorix/
+	go build $(LDFLAGS) -o $(BUILD_DIR)/$(BINARY) ./cmd/Sword-Riding
 	@echo "Built: $(BUILD_DIR)/$(BINARY)"
 
 run:
-	go run ./cmd/xalgorix/ $(ARGS)
+	go run ./cmd/Sword-Riding/ $(ARGS)
 
 clean:
 	rm -rf $(BUILD_DIR)
