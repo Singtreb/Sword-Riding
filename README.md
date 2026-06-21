@@ -34,7 +34,7 @@ XALGORIX_API_KEY=your_provider_api_key
 Start the dashboard:
 
 ```bash
-xalgorix --web
+Sword-Riding --web
 ```
 
 Open `http://127.0.0.1:9137`.
