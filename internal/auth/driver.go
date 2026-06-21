@@ -31,7 +31,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 // Clock abstracts wall-clock reads so the device-code driver's

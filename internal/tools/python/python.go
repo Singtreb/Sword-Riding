@@ -13,12 +13,12 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/resources"
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
-	"github.com/xalgord/xalgorix/v4/internal/tools"
-	"github.com/xalgord/xalgorix/v4/internal/tools/iolimit"
-	"github.com/xalgord/xalgorix/v4/internal/tools/terminal"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/resources"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/iolimit"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/terminal"
 )
 
 // Register adds the python_action tool to the registry.

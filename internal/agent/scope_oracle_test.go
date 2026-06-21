@@ -44,7 +44,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/xalgord/xalgorix/v4/internal/scopeguard"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scopeguard"
 )
 
 // oracleLookupHost is the agent oracle's resolver indirection. The

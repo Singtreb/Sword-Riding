@@ -10,9 +10,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/safe"
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/safe"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
 )
 
 // Policy is the immutable Allow_List boundary check used by every

@@ -10,9 +10,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/xalgord/xalgorix/v4/internal/sandbox"
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
-	"github.com/xalgord/xalgorix/v4/internal/tools"
+	"github.com/Singtreb/Sword-Riding/v4/internal/sandbox"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools"
 )
 
 // ── Per-instance note stores ──

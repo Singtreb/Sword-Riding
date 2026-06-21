@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 // Codex / ChatGPT-subscription OAuth specifics.

@@ -39,7 +39,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 // setupStubCatalog is a tiny CatalogResolver returning a single

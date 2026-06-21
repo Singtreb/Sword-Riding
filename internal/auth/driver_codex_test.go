@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 // writeCodexAuthFixture writes a ~/.codex/auth.json-shaped file and returns

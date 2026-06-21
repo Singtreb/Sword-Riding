@@ -18,9 +18,9 @@ import (
 
 	"golang.org/x/time/rate"
 
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/resources"
-	"github.com/xalgord/xalgorix/v4/internal/safe"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/resources"
+	"github.com/Singtreb/Sword-Riding/v4/internal/safe"
 )
 
 // Message represents a chat message.

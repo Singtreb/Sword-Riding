@@ -4,7 +4,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/llm"
+	"github.com/Singtreb/Sword-Riding/v4/internal/llm"
 )
 
 // TestSendMessage_ConcurrentWithMessageSnapshot is a regression test

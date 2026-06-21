@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
 )
 
 func TestStrReplaceEditor_CreateViewReplaceAndInsert(t *testing.T) {

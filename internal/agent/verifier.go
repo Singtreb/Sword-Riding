@@ -23,14 +23,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/llm"
-	"github.com/xalgord/xalgorix/v4/internal/tools"
-	"github.com/xalgord/xalgorix/v4/internal/tools/browser"
-	"github.com/xalgord/xalgorix/v4/internal/tools/httpclient"
-	"github.com/xalgord/xalgorix/v4/internal/tools/notes"
-	"github.com/xalgord/xalgorix/v4/internal/tools/reporting"
-	"github.com/xalgord/xalgorix/v4/internal/tools/terminal"
-	"github.com/xalgord/xalgorix/v4/internal/tools/websearch"
+	"github.com/Singtreb/Sword-Riding/v4/internal/llm"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/browser"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/httpclient"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/notes"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/reporting"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/terminal"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/websearch"
 )
 
 const (

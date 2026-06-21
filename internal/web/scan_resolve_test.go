@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/auth"
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/auth"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 func TestResolveScanCredentialsUsesActiveLLMProfile(t *testing.T) {

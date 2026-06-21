@@ -14,10 +14,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/proxy"
-	"github.com/xalgord/xalgorix/v4/internal/ratelimit"
-	"github.com/xalgord/xalgorix/v4/internal/tools"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/proxy"
+	"github.com/Singtreb/Sword-Riding/v4/internal/ratelimit"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools"
 )
 
 // globalLimiter is initialized once from config when the package is loaded.

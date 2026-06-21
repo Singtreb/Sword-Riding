@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 // makeJWT builds an unsigned-but-structurally-valid JWT (header.payload.sig)

@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 // Compile-time assertion: *providers.Service satisfies

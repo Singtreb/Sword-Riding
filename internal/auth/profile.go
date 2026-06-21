@@ -17,7 +17,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 // ProfileType discriminates between the two stored credential shapes.

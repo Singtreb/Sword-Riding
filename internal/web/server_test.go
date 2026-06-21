@@ -18,13 +18,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/agent"
-	"github.com/xalgord/xalgorix/v4/internal/auth"
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/llm"
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
-	"github.com/xalgord/xalgorix/v4/internal/scopeguard"
-	"github.com/xalgord/xalgorix/v4/internal/tools/reporting"
+	"github.com/Singtreb/Sword-Riding/v4/internal/agent"
+	"github.com/Singtreb/Sword-Riding/v4/internal/auth"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/llm"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scopeguard"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/reporting"
 )
 
 func newTestServer(t *testing.T, cfg *config.Config) *Server {

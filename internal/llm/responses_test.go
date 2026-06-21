@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
 )
 
 // responsesSSE builds a minimal Responses-API SSE body: a couple of text

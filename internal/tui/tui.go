@@ -9,10 +9,10 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/xalgord/xalgorix/v4/internal/agent"
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/scopeguard"
-	"github.com/xalgord/xalgorix/v4/internal/tools/reporting"
+	"github.com/Singtreb/Sword-Riding/v4/internal/agent"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scopeguard"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/reporting"
 )
 
 // ─── Color Palette ────────────────────────────────────────────────────────────

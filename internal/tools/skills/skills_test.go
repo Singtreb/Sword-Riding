@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/tools"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools"
 )
 
 // setupTestSkills creates a temporary skills directory with test files.

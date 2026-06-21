@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/scopeguard"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scopeguard"
 )
 
 // TestShouldBlockForOutOfScope_AllowsThirdPartyHost is the inverted

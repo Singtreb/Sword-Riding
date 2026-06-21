@@ -15,9 +15,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/proxy"
-	"github.com/xalgord/xalgorix/v4/internal/tools"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/proxy"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools"
 )
 
 const maxBodyBytes = 50 * 1024 // 50 KB — keep context window manageable

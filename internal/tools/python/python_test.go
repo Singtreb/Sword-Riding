@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
 )
 
 func TestExecutePython_ValidationErrors(t *testing.T) {

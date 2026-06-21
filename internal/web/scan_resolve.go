@@ -38,8 +38,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/llm"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/llm"
 )
 
 // errUnknownProviderProfile is returned by resolveScanCredentials

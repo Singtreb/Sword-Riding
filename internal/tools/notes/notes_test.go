@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/tools"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools"
 )
 
 func TestRegistryNotesAreIsolatedByScanContext(t *testing.T) {

@@ -22,12 +22,12 @@ import (
 	"github.com/go-rod/rod/lib/launcher"
 	"github.com/go-rod/rod/lib/proto"
 
-	"github.com/xalgord/xalgorix/v4/internal/config"
-	"github.com/xalgord/xalgorix/v4/internal/resources"
-	"github.com/xalgord/xalgorix/v4/internal/sandbox"
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
-	"github.com/xalgord/xalgorix/v4/internal/tools"
-	"github.com/xalgord/xalgorix/v4/internal/tools/terminal"
+	"github.com/Singtreb/Sword-Riding/v4/internal/config"
+	"github.com/Singtreb/Sword-Riding/v4/internal/resources"
+	"github.com/Singtreb/Sword-Riding/v4/internal/sandbox"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools"
+	"github.com/Singtreb/Sword-Riding/v4/internal/tools/terminal"
 )
 
 // browserCacheDir is the on-disk root for every browser cache, extension

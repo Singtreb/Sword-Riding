@@ -50,7 +50,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/storage"
+	"github.com/Singtreb/Sword-Riding/v4/internal/storage"
 )
 
 // profileIDRE matches the same shape Catalog_Entry.id uses

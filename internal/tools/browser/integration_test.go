@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
 )
 
 // action is a shorthand for browserActionWithContext using the test's context ID.

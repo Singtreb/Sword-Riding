@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/scanctx"
+	"github.com/Singtreb/Sword-Riding/v4/internal/scanctx"
 )
 
 func TestIsBlockedCommand_DangerousAndObfuscatedInputs(t *testing.T) {

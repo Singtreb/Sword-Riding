@@ -57,8 +57,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xalgord/xalgorix/v4/internal/auth"
-	"github.com/xalgord/xalgorix/v4/internal/providers"
+	"github.com/Singtreb/Sword-Riding/v4/internal/auth"
+	"github.com/Singtreb/Sword-Riding/v4/internal/providers"
 )
 
 // profilesReady gates every handler on the profiles + catalog +
