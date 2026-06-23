@@ -175,9 +175,10 @@ export default function ScanDetailPage() {
 
         <div className="flex flex-wrap items-center gap-2">
           <ScanStatusPill status={scan.status} />
-          <Button variant="outline" size="sm" asChild>
+          <Button variant="outline" size="sm" asChild className="gap-1.5">
             <a href={api.reportUrl(scan.id)} target="_blank" rel="noreferrer">
-              <Download className="mr-1 h-4 w-4" /> Report
+              <Download className="h-4 w-4" />
+              <span>Report</span>
             </a>
           </Button>
           {canStart && (
@@ -196,8 +197,10 @@ export default function ScanDetailPage() {
                 })
               }
               disabled={start.isPending}
+              className="gap-1.5"
             >
-              <Play className="mr-1 h-4 w-4" /> Start
+              <Play className="h-4 w-4" />
+              <span>Start</span>
             </Button>
           )}
           {canStop && (
@@ -206,12 +209,14 @@ export default function ScanDetailPage() {
               size="sm"
               onClick={() => stop.mutate(scan.id)}
               disabled={stop.isPending}
+              className="gap-1.5"
             >
-              <X className="mr-1 h-4 w-4" /> Stop
+              <X className="h-4 w-4" />
+              <span>Stop</span>
             </Button>
           )}
           <Button
-            variant="ghost"
+            variant="destructive"
             size="sm"
             onClick={() => {
               if (
@@ -227,8 +232,10 @@ export default function ScanDetailPage() {
               }
             }}
             disabled={del.isPending}
+            className="gap-1.5"
           >
-            <Trash2 className="mr-1 h-4 w-4" /> Delete
+            <Trash2 className="h-4 w-4" />
+            <span>Delete</span>
           </Button>
         </div>
       </header>

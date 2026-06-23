@@ -1,41 +1,39 @@
 @import "tailwindcss";
 
-/* Geist + Vercel-inspired dark design tokens for Xalgorix. */
 @theme {
-  --color-background: #050505;
-  --color-foreground: #fafafa;
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
 
-  --color-card: #0a0a0a;
-  --color-card-foreground: #fafafa;
+  --color-card: #f8f8f8;
+  --color-card-foreground: #1a1a1a;
 
-  --color-popover: #0a0a0a;
-  --color-popover-foreground: #fafafa;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1a1a1a;
 
-  --color-primary: #fafafa;
-  --color-primary-foreground: #0a0a0a;
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
 
-  --color-secondary: #111111;
-  --color-secondary-foreground: #fafafa;
+  --color-secondary: #e5e5e5;
+  --color-secondary-foreground: #1a1a1a;
 
-  --color-muted: #111111;
-  --color-muted-foreground: #a1a1aa;
+  --color-muted: #f0f0f0;
+  --color-muted-foreground: #6b7280;
 
-  --color-accent: #1a1a1a;
-  --color-accent-foreground: #fafafa;
+  --color-accent: #eff6ff;
+  --color-accent-foreground: #1a1a1a;
 
-  --color-border: #262626;
-  --color-input: #1a1a1a;
-  --color-ring: #404040;
+  --color-border: #e5e7eb;
+  --color-input: #e5e7eb;
+  --color-ring: #3b82f6;
 
   --color-destructive: #ef4444;
   --color-destructive-foreground: #fafafa;
 
-  /* Severity palette */
   --color-severity-critical: #dc2626;
   --color-severity-high: #ea580c;
   --color-severity-medium: #ca8a04;
   --color-severity-low: #2563eb;
-  --color-severity-info: #525252;
+  --color-severity-info: #6b7280;
 
   --color-success: #10b981;
   --color-warning: #f59e0b;
@@ -54,7 +52,7 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   html,
@@ -79,11 +77,10 @@
   }
 
   ::selection {
-    background: #ffffff;
-    color: #000000;
+    background: #3b82f6;
+    color: #ffffff;
   }
 
-  /* Subtle scrollbar that matches the Vercel feel */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -101,18 +98,16 @@
   }
 }
 
-/* Utility: subtle border + slight hover lift on cards */
 @utility card-hover {
   transition:
     background-color 0.15s ease,
     border-color 0.15s ease;
 }
 .card-hover:hover {
-  background-color: #0d0d0d;
-  border-color: #2f2f2f;
+  background-color: #f0f0f0;
+  border-color: #d1d5db;
 }
 
-/* Animated connection dot */
 @keyframes pulse-dot {
   0%,
   100% {
@@ -126,7 +121,6 @@
   animation: pulse-dot 1.6s ease-in-out infinite;
 }
 
-/* Mono code block style */
 .mono {
   font-family: var(--font-mono);
 }
