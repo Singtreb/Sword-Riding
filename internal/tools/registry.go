@@ -204,12 +204,29 @@ func (r *Registry) Execute(name string, args map[string]string) (Result, error) 
 	}
 
 	// Validate required parameters
+	var missingParams []string
 	for _, p := range tool.Parameters {
 		if p.Required {
 			if v, exists := localArgs[p.Name]; !exists || strings.TrimSpace(v) == "" {
-				return Result{}, fmt.Errorf("missing required parameter '%s' for tool '%s'", p.Name, name)
+				missingParams = append(missingParams, p.Name)
 			}
 		}
+	}
+	if len(missingParams) > 0 {
+		var requiredList strings.Builder
+		for _, p := range tool.Parameters {
+			if p.Required {
+				if requiredList.Len() > 0 {
+					requiredList.WriteString(", ")
+				}
+				requiredList.WriteString(p.Name)
+			}
+		}
+		if len(missingParams) == 1 {
+			return Result{}, fmt.Errorf("missing required parameter '%s' for tool '%s'. Required parameters: %s", missingParams[0], name, requiredList.String())
+		}
+		return Result{}, fmt.Errorf("missing %d required parameters for tool '%s': %s. Required parameters: %s",
+			len(missingParams), name, strings.Join(missingParams, ", "), requiredList.String())
 	}
 
 	result, err := tool.Execute(localArgs)

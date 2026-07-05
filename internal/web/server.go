@@ -7091,15 +7091,18 @@ func (s *Server) handleListScans(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// handleDownloadReport serves the PDF report for a scan.
+// handleDownloadReport serves the PDF or MD report for a scan.
 func (s *Server) handleDownloadReport(w http.ResponseWriter, r *http.Request) {
 	scanID := strings.TrimPrefix(r.URL.Path, "/api/report/")
-	// Normalise: strip any path separators so a crafted /api/report/../etc/passwd
-	// can never escape the scan-dir even if a future caller forgets.
 	scanID = filepath.Base(scanID)
 	if scanID == "" || scanID == "." || scanID == "/" {
 		http.Error(w, "scan ID required", http.StatusBadRequest)
 		return
+	}
+
+	format := r.URL.Query().Get("format")
+	if format == "" {
+		format = "pdf"
 	}
 
 	scanDir, rec := s.findScanByID(scanID)
@@ -7119,21 +7122,44 @@ func (s *Server) handleDownloadReport(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	reportPath, err := s.generateReportAt(rec, scanDir)
-	if err != nil {
-		log.Printf("Report generation error: %v", err)
-		fallbackPath := filepath.Join(scanDir, fmt.Sprintf("xalgorix_report_%s.pdf", scanID))
-		if info, statErr := os.Stat(fallbackPath); statErr == nil && info.Mode().IsRegular() {
-			reportPath = fallbackPath
-		} else {
-			http.Error(w, "failed to generate report: "+err.Error(), http.StatusInternalServerError)
-			return
+	var reportPath string
+	var contentType string
+	var filename string
+
+	switch format {
+	case "md":
+		reportPath = filepath.Join(scanDir, fmt.Sprintf("xalgorix_report_%s.md", scanID))
+		contentType = "text/markdown"
+		filename = fmt.Sprintf("xalgorix_report_%s.md", scanID)
+		
+		if _, err := os.Stat(reportPath); os.IsNotExist(err) {
+			if genPath, genErr := s.generateMDReport(rec); genErr != nil {
+				log.Printf("MD report generation error: %v", genErr)
+				http.Error(w, "failed to generate report: "+genErr.Error(), http.StatusInternalServerError)
+				return
+			} else {
+				reportPath = genPath
+			}
 		}
+	case "pdf":
+		fallthrough
+	default:
+		var err error
+		reportPath, err = s.generateReportAt(rec, scanDir)
+		if err != nil {
+			log.Printf("PDF report generation error: %v", err)
+			fallbackPath := filepath.Join(scanDir, fmt.Sprintf("xalgorix_report_%s.pdf", scanID))
+			if info, statErr := os.Stat(fallbackPath); statErr == nil && info.Mode().IsRegular() {
+				reportPath = fallbackPath
+			} else {
+				http.Error(w, "failed to generate report: "+err.Error(), http.StatusInternalServerError)
+				return
+			}
+		}
+		contentType = "application/pdf"
+		filename = fmt.Sprintf("xalgorix_report_%s.pdf", scanID)
 	}
 
-	// Defense-in-depth: confirm the resolved target is a regular file before
-	// handing it to http.ServeFile. ServeFile will happily render a directory
-	// index if asked for a directory.
 	info, err := os.Stat(reportPath)
 	if err != nil {
 		log.Printf("Report stat failed for %s: %v", reportPath, err)
@@ -7146,8 +7172,8 @@ func (s *Server) handleDownloadReport(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/pdf")
-	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"xalgorix_report_%s.pdf\"", scanID))
+	w.Header().Set("Content-Type", contentType)
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
 	http.ServeFile(w, r, reportPath)
 }
 

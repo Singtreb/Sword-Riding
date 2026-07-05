@@ -1,0 +1,65 @@
+# Build output
+build/
+dist/
+webui/dist/
+
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.o
+*.a
+
+# Node.js dependencies
+webui/node_modules/
+
+# npm lockfile (optional - some prefer to include it)
+webui/package-lock.json
+webui/yarn.lock
+webui/pnpm-lock.yaml
+
+# TypeScript build info
+webui/tsconfig.app.tsbuildinfo
+webui/tsconfig.node.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Data directories
+data/
+*.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# OS files
+Thumbs.db
+
+# Test coverage
+coverage/
+*.coverprofile
+
+# Profiling
+*.pprof
+
+# Scan reports (generated at runtime)
+*_report_*.pdf
+*_report_*.md

@@ -15,6 +15,8 @@ import (
 	"time"
 
 	"github.com/go-pdf/fpdf"
+
+	"github.com/Singtreb/Sword-Riding/v4/internal/reporting"
 )
 
 type reportPalette struct {
@@ -1792,7 +1794,71 @@ https://github.com/xalgord/xalgorix`
 		return "", fmt.Errorf("failed to generate PDF: %w", err)
 	}
 
+	_, _ = s.generateMDReport(scan)
+
 	return outPath, nil
+}
+
+// generateMDReport creates a Markdown report for a scan with detailed PoC and remediation.
+func (s *Server) generateMDReport(scan *ScanRecord) (string, error) {
+	vulns := make([]reporting.Vuln, len(scan.Vulns))
+	for i, v := range scan.Vulns {
+		vulns[i] = reporting.Vuln{
+			ID:                 v.ID,
+			Title:              v.Title,
+			Severity:           v.Severity,
+			Target:             v.Target,
+			Endpoint:           v.Endpoint,
+			CVSS:               v.CVSS,
+			CVSSVector:         v.CVSSVector,
+			Description:        v.Description,
+			Impact:             v.Impact,
+			Method:             v.Method,
+			CVE:                v.CVE,
+			CWE:                v.CWE,
+			OWASP:              v.OWASP,
+			TechnicalAnalysis:  v.TechnicalAnalysis,
+			PoCDescription:     v.PoCDescription,
+			PoCScript:          v.PoCScript,
+			Remediation:        v.Remediation,
+			ExploitationProof:  v.ExploitationProof,
+			VerificationMethod: v.VerificationMethod,
+			Verified:           v.Verified,
+		}
+	}
+
+	events := make([]reporting.Event, len(scan.Events))
+	for i, e := range scan.Events {
+		events[i] = reporting.Event{
+			Type:     e.Type,
+			Content:  e.Content,
+			ToolName: e.ToolName,
+			ToolArgs: e.ToolArgs,
+			Output:   e.Output,
+			Error:    e.Error,
+		}
+	}
+
+	reportScan := &reporting.Scan{
+		ID:          scan.ID,
+		Name:        scan.Name,
+		Target:      scan.Target,
+		StartedAt:   scan.StartedAt,
+		FinishedAt:  scan.FinishedAt,
+		Status:      scan.Status,
+		CompanyName: scan.CompanyName,
+		LogoPath:    scan.LogoPath,
+		Phases:      scan.Phases,
+		Iterations:  scan.Iterations,
+		ToolCalls:   scan.ToolCalls,
+		TotalTokens: scan.TotalTokens,
+		Vulns:       vulns,
+		Events:      events,
+	}
+
+	return reporting.GenerateMD(reportScan, reporting.Options{
+		ScanDir: s.currentScanDir,
+	})
 }
 
 // extractURL extracts a clean URL from a string

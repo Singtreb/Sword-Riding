@@ -606,7 +606,7 @@ func browserActionWithContext(ctxID string, args map[string]string) (tools.Resul
 	case "close":
 		return closeBrowser(ctxID)
 	default:
-		return tools.Result{}, fmt.Errorf("unknown browser action: %s. Available: launch, goto, snapshot, click, type, submit, scroll, screenshot, get_html, execute_js, get_cookies, set_cookie, save_session, load_session, list_sessions, wait, select, fill_form, get_url, iframe, main_frame, extract_links, new_tab, switch_tab, close", command)
+		return tools.Result{}, fmt.Errorf("未知的浏览器操作: %s。可用操作: launch, goto, snapshot, click, type, submit, scroll, screenshot, get_html, execute_js, get_cookies, set_cookie, save_session, load_session, list_sessions, wait, select, fill_form, get_url, iframe, main_frame, extract_links, new_tab, switch_tab, close", command)
 	}
 }
 
@@ -645,7 +645,7 @@ func launchBrowser(ctxID, rawURL, proxy string) (tools.Result, error) {
 func navigateTo(ctxID, rawURL string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched — use launch first")
+		return tools.Result{}, fmt.Errorf("浏览器未启动 — 请先使用 launch 命令")
 	}
 
 	err := s.page.Timeout(20 * time.Second).Navigate(rawURL)
@@ -666,13 +666,13 @@ func parseSelector(selector string) string {
 func clickElement(ctxID, selector string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	selector = parseSelector(selector)
 	el, err := s.page.Timeout(10 * time.Second).Element(selector)
 	if err != nil {
-		return tools.Result{}, fmt.Errorf("element not found: %s", selector)
+		return tools.Result{}, fmt.Errorf("元素未找到: %s", selector)
 	}
 
 	// Scroll element into view first
@@ -687,13 +687,13 @@ func clickElement(ctxID, selector string) (tools.Result, error) {
 func typeText(ctxID, selector, text string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	selector = parseSelector(selector)
 	el, err := s.page.Timeout(10 * time.Second).Element(selector)
 	if err != nil {
-		return tools.Result{}, fmt.Errorf("element not found: %s", selector)
+		return tools.Result{}, fmt.Errorf("元素未找到: %s", selector)
 	}
 
 	// Clear existing content and type new text
@@ -706,7 +706,7 @@ func typeText(ctxID, selector, text string) (tools.Result, error) {
 func submitForm(ctxID, selector string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	if selector != "" {
@@ -714,7 +714,7 @@ func submitForm(ctxID, selector string) (tools.Result, error) {
 		selector = parseSelector(selector)
 		el, err := s.page.Timeout(10 * time.Second).Element(selector)
 		if err != nil {
-			return tools.Result{}, fmt.Errorf("submit element not found: %s", selector)
+			return tools.Result{}, fmt.Errorf("提交元素未找到: %s", selector)
 		}
 		el.MustScrollIntoView()
 		el.MustClick()
@@ -752,16 +752,16 @@ func submitForm(ctxID, selector string) (tools.Result, error) {
 func getCookies(ctxID string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	cookies, err := s.page.Cookies([]string{})
 	if err != nil {
-		return tools.Result{}, fmt.Errorf("failed to get cookies: %w", err)
+		return tools.Result{}, fmt.Errorf("获取 cookies 失败: %w", err)
 	}
 
 	if len(cookies) == 0 {
-		return tools.Result{Output: "No cookies found for current page."}, nil
+		return tools.Result{Output: "当前页面未找到 cookies。"}, nil
 	}
 
 	var b strings.Builder
@@ -794,10 +794,10 @@ func getCookies(ctxID string) (tools.Result, error) {
 func setCookie(ctxID, name, value, domain string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 	if name == "" || value == "" {
-		return tools.Result{}, fmt.Errorf("name and text (value) are required for set_cookie")
+		return tools.Result{}, fmt.Errorf("set_cookie 需要 name 和 text (value) 参数")
 	}
 
 	// Auto-detect domain from current URL if not provided
@@ -835,7 +835,7 @@ func saveSession(ctxID, sessionName string) (tools.Result, error) {
 	defer s.mu.Unlock()
 
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	if sessionName == "" {
@@ -893,7 +893,7 @@ func loadSession(ctxID, sessionName string) (tools.Result, error) {
 	defer s.mu.Unlock()
 
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	if sessionName == "" {
@@ -945,9 +945,9 @@ func loadSession(ctxID, sessionName string) (tools.Result, error) {
 	if len(cookies) == 0 {
 		avail := listSessionNames(s)
 		if len(avail) > 0 {
-			return tools.Result{Output: fmt.Sprintf("No session named '%s' found. Available sessions: %s", sessionName, strings.Join(avail, ", "))}, nil
+			return tools.Result{Output: fmt.Sprintf("未找到名为 '%s' 的会话。可用会话: %s", sessionName, strings.Join(avail, ", "))}, nil
 		}
-		return tools.Result{Output: fmt.Sprintf("No session named '%s' found. Use save_session session_name=%s first after logging in.", sessionName, sessionName)}, nil
+		return tools.Result{Output: fmt.Sprintf("未找到名为 '%s' 的会话。请在登录后先使用 save_session session_name=%s 保存会话。", sessionName, sessionName)}, nil
 	}
 
 	params := make([]*proto.NetworkCookieParam, 0, len(cookies))
@@ -1029,11 +1029,11 @@ func listSessions(ctxID string) (tools.Result, error) {
 	}
 
 	if len(names) == 0 {
-		return tools.Result{Output: "No saved sessions. Use save_session session_name=NAME after logging in."}, nil
+		return tools.Result{Output: "没有已保存的会话。请在登录后使用 save_session session_name=NAME 保存会话。"}, nil
 	}
 
 	return tools.Result{
-		Output:   fmt.Sprintf("Saved sessions: %s\nUse load_session session_name=NAME to switch.", strings.Join(names, ", ")),
+		Output:   fmt.Sprintf("已保存的会话: %s\n使用 load_session session_name=NAME 切换会话。", strings.Join(names, ", ")),
 		Metadata: map[string]any{"sessions": names},
 	}, nil
 }
@@ -1051,7 +1051,7 @@ func listSessionNames(s *browserStore) []string {
 func waitFor(ctxID, selector, waitType, timeoutStr string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	timeout := 10 * time.Second
@@ -1087,27 +1087,27 @@ func waitFor(ctxID, selector, waitType, timeoutStr string) (tools.Result, error)
 		selector = parseSelector(selector)
 		_, err := s.page.Timeout(timeout).Element(selector)
 		if err != nil {
-			return tools.Result{Output: fmt.Sprintf("Element '%s' did not appear within %v", selector, timeout)}, nil
+			return tools.Result{Output: fmt.Sprintf("元素 '%s' 在 %v 内未出现", selector, timeout)}, nil
 		}
-		return pageState(ctxID, fmt.Sprintf("Element found: %s", selector), s.currentTab)
+		return pageState(ctxID, fmt.Sprintf("元素已找到: %s", selector), s.currentTab)
 	}
 
 	// Default: just wait for page to stabilize
 	_ = s.page.Timeout(10 * time.Second).WaitStable(1 * time.Second)
-	return pageState(ctxID, "Page stabilized", s.currentTab)
+	return pageState(ctxID, "页面已稳定", s.currentTab)
 }
 
 // selectOption selects an option from a <select> dropdown
 func selectOption(ctxID, selector, value string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	selector = parseSelector(selector)
 	el, err := s.page.Timeout(10 * time.Second).Element(selector)
 	if err != nil {
-		return tools.Result{}, fmt.Errorf("select element not found: %s", selector)
+		return tools.Result{}, fmt.Errorf("选择元素未找到: %s", selector)
 	}
 
 	// Try selecting by value first, then by visible text
@@ -1139,10 +1139,10 @@ func selectOption(ctxID, selector, value string) (tools.Result, error) {
 func fillForm(ctxID, fields string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 	if fields == "" {
-		return tools.Result{}, fmt.Errorf("fields parameter is required. Format: field1=value1|field2=value2")
+		return tools.Result{}, fmt.Errorf("fields 参数是必需的。格式: field1=value1|field2=value2")
 	}
 
 	pairs := strings.Split(fields, "|")
@@ -1196,12 +1196,12 @@ func fillForm(ctxID, fields string) (tools.Result, error) {
 func getURL(ctxID string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	info, _ := s.page.Info()
 	if info == nil {
-		return tools.Result{Output: "Unable to get page info"}, nil
+		return tools.Result{Output: "无法获取页面信息"}, nil
 	}
 
 	return tools.Result{
@@ -1214,7 +1214,7 @@ func getURL(ctxID string) (tools.Result, error) {
 func switchToIframe(ctxID, selector string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	if selector == "" {
@@ -1224,12 +1224,12 @@ func switchToIframe(ctxID, selector string) (tools.Result, error) {
 
 	el, err := s.page.Timeout(10 * time.Second).Element(selector)
 	if err != nil {
-		return tools.Result{}, fmt.Errorf("iframe not found: %s", selector)
+		return tools.Result{}, fmt.Errorf("iframe 未找到: %s", selector)
 	}
 
 	frame, err := el.Frame()
 	if err != nil {
-		return tools.Result{}, fmt.Errorf("failed to access iframe: %w", err)
+		return tools.Result{}, fmt.Errorf("访问 iframe 失败: %w", err)
 	}
 
 	// Store the main page and switch context to the iframe's page
@@ -1259,17 +1259,17 @@ func switchToMainFrame(ctxID string) (tools.Result, error) {
 		if !strings.HasPrefix(id, "iframe_") {
 			s.page = p
 			s.currentTab = id
-			return pageState(ctxID, "Switched to main frame", s.currentTab)
+			return pageState(ctxID, "已切换到主框架", s.currentTab)
 		}
 	}
-	return tools.Result{Output: "No main frame found"}, nil
+	return tools.Result{Output: "未找到主框架"}, nil
 }
 
 // extractLinks extracts all links from the current page
 func extractLinks(ctxID string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	script := `() => {
@@ -1286,12 +1286,12 @@ func extractLinks(ctxID string) (tools.Result, error) {
 
 	result, err := s.page.Eval(script)
 	if err != nil {
-		return tools.Result{}, fmt.Errorf("failed to extract links: %w", err)
+		return tools.Result{}, fmt.Errorf("提取链接失败: %w", err)
 	}
 
 	output := result.Value.String()
 	if output == "" {
-		output = "No links found on the page."
+		output = "页面上未找到链接。"
 	}
 
 	// Count links
@@ -1306,7 +1306,7 @@ func extractLinks(ctxID string) (tools.Result, error) {
 func scrollPage(ctxID, direction string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	switch strings.ToLower(direction) {
@@ -1325,7 +1325,7 @@ func scrollPage(ctxID, direction string) (tools.Result, error) {
 func takeScreenshot(ctxID string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	img, err := s.page.Screenshot(true, &proto.PageCaptureScreenshot{
@@ -1333,7 +1333,7 @@ func takeScreenshot(ctxID string) (tools.Result, error) {
 		Quality: nil,
 	})
 	if err != nil {
-		return tools.Result{}, fmt.Errorf("screenshot failed: %w", err)
+		return tools.Result{}, fmt.Errorf("截图失败: %w", err)
 	}
 
 	b64 := base64.StdEncoding.EncodeToString(img)
@@ -1352,7 +1352,7 @@ func takeScreenshot(ctxID string) (tools.Result, error) {
 func takeSnapshot(ctxID string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	script := `() => {
@@ -1443,7 +1443,7 @@ func takeSnapshot(ctxID string) (tools.Result, error) {
 func getHTML(ctxID, selector string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	var html string
@@ -1451,7 +1451,7 @@ func getHTML(ctxID, selector string) (tools.Result, error) {
 		selector = parseSelector(selector)
 		el, err := s.page.Timeout(10 * time.Second).Element(selector)
 		if err != nil {
-			return tools.Result{}, fmt.Errorf("element not found: %s", selector)
+			return tools.Result{}, fmt.Errorf("元素未找到: %s", selector)
 		}
 		html, _ = el.HTML()
 	} else {
@@ -1468,10 +1468,10 @@ func getHTML(ctxID, selector string) (tools.Result, error) {
 func executeJS(ctxID, code string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.page == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动 — 请先使用 browser_action command=launch")
 	}
 	if code == "" {
-		return tools.Result{}, fmt.Errorf("code is required")
+		return tools.Result{}, fmt.Errorf("execute_js 需要 code 参数。示例: browser_action command=execute_js code=document.cookie")
 	}
 
 	// Use a timeout to prevent blocking forever (e.g., alert() in headless Chrome).
@@ -1481,10 +1481,13 @@ func executeJS(ctxID, code string) (tools.Result, error) {
 		// If it timed out, it's likely a blocking dialog that wasn't caught
 		if strings.Contains(err.Error(), "context deadline") || strings.Contains(err.Error(), "timeout") {
 			return tools.Result{
-				Output: "⚠️ JS execution timed out (likely a blocking dialog like alert/confirm/prompt). The dialog was triggered, which confirms JavaScript execution. Use page.Eval with a non-blocking approach instead.",
+				Output: "⚠️ JS 执行超时（可能是阻塞对话框如 alert/confirm/prompt）。对话框已被触发，确认 JavaScript 已执行。请使用非阻塞方式代替。",
 			}, nil
 		}
-		return tools.Result{}, fmt.Errorf("JS error: %w", err)
+		// Clean up the error message for better readability
+		errMsg := err.Error()
+		errMsg = strings.ReplaceAll(errMsg, "eval js error: ", "")
+		return tools.Result{}, fmt.Errorf("JS 执行错误: %s。请检查 JavaScript 语法并确保页面已加载完成。", errMsg)
 	}
 
 	return tools.Result{Output: result.Value.String()}, nil
@@ -1493,7 +1496,7 @@ func executeJS(ctxID, code string) (tools.Result, error) {
 func newTab(ctxID, rawURL string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	if s.browser == nil {
-		return tools.Result{}, fmt.Errorf("browser not launched")
+		return tools.Result{}, fmt.Errorf("浏览器未启动")
 	}
 
 	p := s.browser.MustPage()
@@ -1520,7 +1523,7 @@ func switchTab(ctxID, tabID string) (tools.Result, error) {
 	s := getBrowserStoreByID(ctxID)
 	p, ok := s.pages[tabID]
 	if !ok {
-		return tools.Result{}, fmt.Errorf("tab not found: %s (available: %v)", tabID, tabListForCtx(ctxID))
+		return tools.Result{}, fmt.Errorf("标签页未找到: %s (可用: %v)", tabID, tabListForCtx(ctxID))
 	}
 
 	s.page = p
