@@ -381,12 +381,12 @@ export default function SchedulesPage() {
                       <td className="px-4 py-3 align-middle text-xs text-muted-foreground">
                         {s.last_run
                           ? new Date(s.last_run).toLocaleString()
-                          : "Never"}
+                          : "从未运行"}
                       </td>
                       <td className="px-4 py-3 align-middle text-xs font-medium text-foreground">
                         {s.enabled
                           ? new Date(s.next_run).toLocaleString()
-                          : "Paused"}
+                          : "已暂停"}
                       </td>
                       <td className="px-4 py-3 align-middle">
                         <Switch
@@ -418,44 +418,43 @@ export default function SchedulesPage() {
         <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {editingSchedule ? "Edit Schedule" : "New Scan Schedule"}
+              {editingSchedule ? "编辑任务" : "新建扫描计划"}
             </DialogTitle>
             <DialogDescription>
-              Configure the schedule frequency, target list, and scanning
-              preferences.
+              配置计划执行频率、目标列表和扫描偏好设置。
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="sched-name">Schedule Name *</Label>
+                <Label htmlFor="sched-name">计划名称 *</Label>
                 <Input
                   id="sched-name"
                   required
-                  placeholder="e.g. Weekly Perimeter Audit"
+                  placeholder="例如：每周边界审计"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="sched-interval">Frequency Interval *</Label>
+                <Label htmlFor="sched-interval">执行间隔 *</Label>
                 <Select value={interval} onValueChange={setInterval}>
                   <SelectTrigger id="sched-interval">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="hourly">Hourly</SelectItem>
-                    <SelectItem value="daily">Daily</SelectItem>
-                    <SelectItem value="weekly">Weekly</SelectItem>
-                    <SelectItem value="monthly">Monthly</SelectItem>
+                    <SelectItem value="hourly">每小时</SelectItem>
+                    <SelectItem value="daily">每天</SelectItem>
+                    <SelectItem value="weekly">每周</SelectItem>
+                    <SelectItem value="monthly">每月</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="sched-targets">Targets *</Label>
+              <Label htmlFor="sched-targets">目标 *</Label>
               <Textarea
                 id="sched-targets"
                 required
@@ -466,27 +465,26 @@ export default function SchedulesPage() {
                 className="mono text-xs"
               />
               <p className="text-[11px] text-muted-foreground">
-                One target per line, or comma-separated. Only targets you are
-                authorized to audit.
+                每行一个目标，或使用逗号分隔。仅限您有权审计的目标。
               </p>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label>Scan Mode</Label>
+                <Label>扫描模式</Label>
                 <Select value={scanMode} onValueChange={setScanMode}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="single">Single target</SelectItem>
-                    <SelectItem value="wildcard">Wildcard / multi</SelectItem>
+                    <SelectItem value="single">单个目标</SelectItem>
+                    <SelectItem value="wildcard">通配符/多个</SelectItem>
                     <SelectItem value="dast">DAST</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Provider profile</Label>
+                <Label>提供者配置</Label>
                 <Select
                   value={providerProfile || "default"}
                   onValueChange={(v) =>
@@ -497,7 +495,7 @@ export default function SchedulesPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="default">Server default</SelectItem>
+                    <SelectItem value="default">服务器默认</SelectItem>
                     {profileOptions.map((opt) => (
                       <SelectItem key={opt.value} value={opt.value}>
                         {opt.label}
@@ -506,15 +504,14 @@ export default function SchedulesPage() {
                   </SelectContent>
                 </Select>
                 <p className="text-[11px] text-muted-foreground">
-                  Pick a stored credential profile to run this schedule
-                  under. Manage profiles under Settings → Providers.
+                  选择一个已存储的凭证配置来运行此计划。在设置 → 提供者中管理配置。
                 </p>
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label>Recon Access</Label>
+                <Label>侦察访问</Label>
                 <Select
                   value={reconMode}
                   onValueChange={(v) => setReconMode(v as ActivityMode)}
@@ -524,13 +521,13 @@ export default function SchedulesPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="active">Active allowed</SelectItem>
-                    <SelectItem value="passive">Passive only</SelectItem>
+                    <SelectItem value="active">允许主动侦察</SelectItem>
+                    <SelectItem value="passive">仅被动侦察</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Testing Access</Label>
+                <Label>测试访问</Label>
                 <Select
                   value={scanIntensity}
                   onValueChange={(v) => {
@@ -543,8 +540,8 @@ export default function SchedulesPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="active">Active allowed</SelectItem>
-                    <SelectItem value="passive">Passive only</SelectItem>
+                    <SelectItem value="active">允许主动测试</SelectItem>
+                    <SelectItem value="passive">仅被动测试</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -552,18 +549,18 @@ export default function SchedulesPage() {
 
             <div className="space-y-2">
               <Label htmlFor="sched-instruction">
-                Custom instruction (optional)
+                自定义指令（可选）
               </Label>
               <Input
                 id="sched-instruction"
-                placeholder="e.g. Skip noisy subdomain enumeration, focus on api testing"
+                placeholder="例如：跳过嘈杂的子域名枚举，专注于API测试"
                 value={instruction}
                 onChange={(e) => setInstruction(e.target.value)}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="sched-model">Model override</Label>
+              <Label htmlFor="sched-model">模型覆盖</Label>
               <Input
                 id="sched-model"
                 placeholder={llmQuery.data?.model || "provider/model-name"}
@@ -571,38 +568,43 @@ export default function SchedulesPage() {
                 onChange={(e) => setModel(e.target.value)}
               />
               <p className="text-[11px] text-muted-foreground">
-                Override the model for this schedule. Leave blank to use the
-                server default{llmQuery.data?.model ? ` (${llmQuery.data.model})` : ""}.
+                为此计划覆盖模型。留空使用服务器默认值{llmQuery.data?.model ? ` (${llmQuery.data.model})` : ""}。
               </p>
             </div>
 
             <Separator />
 
             <div className="space-y-2">
-              <Label>Severity filter</Label>
+              <Label>严重性过滤</Label>
               <div className="flex flex-wrap gap-1.5">
                 {SEVERITIES.map((s) => {
                   const active = severityFilter.includes(s);
+                  const sevNames: Record<string, string> = {
+                    info: "信息",
+                    low: "低危",
+                    medium: "中危",
+                    high: "高危",
+                    critical: "严重",
+                  };
                   return (
                     <button
                       type="button"
                       key={s}
                       onClick={() => toggleSeverity(s)}
                       className={cn(
-                        "rounded-full border px-2.5 py-1 text-[11px] capitalize transition-colors",
+                        "rounded-full border px-2.5 py-1 text-[11px] transition-colors",
                         active
                           ? "border-primary/60 bg-primary/10 text-foreground"
                           : "border-border bg-card text-muted-foreground hover:text-foreground",
                       )}
                     >
-                      {s}
+                      {sevNames[s]}
                     </button>
                   );
                 })}
               </div>
               <p className="text-[11px] text-muted-foreground">
-                Report only findings at or above selected severities. Leave
-                blank for all.
+                仅报告等于或高于选定严重性的发现。留空则包含全部。
               </p>
             </div>
 
@@ -610,17 +612,17 @@ export default function SchedulesPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="sched-company">Branding Company Name</Label>
+                <Label htmlFor="sched-company">公司名称</Label>
                 <Input
                   id="sched-company"
-                  placeholder="Shown on the PDF cover page"
+                  placeholder="显示在PDF封面页"
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="sched-webhook">
-                  Discord Webhook Notification
+                  Discord Webhook 通知
                 </Label>
                 <Input
                   id="sched-webhook"
@@ -632,7 +634,7 @@ export default function SchedulesPage() {
             </div>
 
             <div className="space-y-2">
-              <Label>Target Brand Logo</Label>
+              <Label>品牌Logo</Label>
               <div className="flex items-center gap-3">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border bg-muted">
                   {logoPath ? (
@@ -659,7 +661,7 @@ export default function SchedulesPage() {
                       ) : (
                         <Upload className="h-3.5 w-3.5" />
                       )}
-                      Upload
+                      上传
                     </label>
                     <Input
                       id="scheduleLogo"
@@ -708,7 +710,7 @@ export default function SchedulesPage() {
                 variant="ghost"
                 onClick={() => setDialogOpen(false)}
               >
-                Cancel
+                取消
               </Button>
               <Button
                 type="submit"
@@ -719,8 +721,8 @@ export default function SchedulesPage() {
                 }
               >
                 {createMutation.isPending || updateMutation.isPending
-                  ? "Saving…"
-                  : "Save schedule"}
+                  ? "保存中…"
+                  : "保存计划"}
               </Button>
             </DialogFooter>
           </form>
@@ -790,11 +792,11 @@ function ScheduleActionMenu({
         <DropdownMenu.Content align="end" className={menuContentClass}>
           <DropdownMenu.Item className={menuItemClass} onSelect={onTrigger}>
             <Play className="h-3.5 w-3.5 text-green-400" />
-            Run now
+            立即运行
           </DropdownMenu.Item>
           <DropdownMenu.Item className={menuItemClass} onSelect={onEdit}>
             <Edit2 className="h-3.5 w-3.5" />
-            Edit settings
+            编辑设置
           </DropdownMenu.Item>
           <DropdownMenu.Separator className="-mx-1 my-1 h-px bg-border" />
           <DropdownMenu.Item
@@ -802,7 +804,7 @@ function ScheduleActionMenu({
             onSelect={onDelete}
           >
             <Trash2 className="h-3.5 w-3.5" />
-            Delete schedule
+            删除计划
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

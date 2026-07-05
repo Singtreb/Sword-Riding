@@ -31,22 +31,20 @@ export const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      position={position}
-      className={cn(
-        "relative z-50 max-h-80 min-w-32 overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md",
-        "data-[side=bottom]:translate-y-1",
-        className,
-      )}
-      {...props}
-    >
-      <SelectPrimitive.Viewport className="p-1">
-        {children}
-      </SelectPrimitive.Viewport>
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
+  <SelectPrimitive.Content
+    ref={ref}
+    position={position}
+    className={cn(
+      "relative z-50 max-h-80 min-w-32 overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md",
+      "data-[side=bottom]:translate-y-1",
+      className,
+    )}
+    {...props}
+  >
+    <SelectPrimitive.Viewport className="p-1">
+      {children}
+    </SelectPrimitive.Viewport>
+  </SelectPrimitive.Content>
 ));
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 

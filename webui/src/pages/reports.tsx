@@ -30,7 +30,7 @@ export default function ReportsPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">报告</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          每个已完成扫描的PDF报告。由服务器按需生成。
+          每个已完成扫描的报告。支持 PDF 和 Markdown 格式下载，Markdown 格式包含详细的 PoC、复现步骤和修复方法。
         </p>
       </div>
 
@@ -59,7 +59,7 @@ export default function ReportsPage() {
           <EmptyState
             icon={<FileText className="h-6 w-6" />}
             title="暂无报告"
-            description="运行扫描后，PDF报告将在此处可用。"
+            description="运行扫描后，PDF 和 Markdown 报告将在此处可用。"
           />
         ) : (
           <ul className="divide-y divide-border">
@@ -90,13 +90,22 @@ export default function ReportsPage() {
                       <ExternalLink className="h-3.5 w-3.5" /> 打开
                     </Link>
                   </Button>
-                  <Button asChild size="sm">
+                  <Button asChild size="sm" variant="outline">
                     <a
                       href={`/api/report/${s.id}`}
                       target="_blank"
                       rel="noreferrer"
                     >
                       <Download className="h-3.5 w-3.5" /> PDF
+                    </a>
+                  </Button>
+                  <Button asChild size="sm">
+                    <a
+                      href={`/api/report/${s.id}?format=md`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Download className="h-3.5 w-3.5" /> MD
                     </a>
                   </Button>
                   <Button
