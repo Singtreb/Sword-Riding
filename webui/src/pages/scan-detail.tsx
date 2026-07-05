@@ -215,7 +215,7 @@ export default function ScanDetailPage() {
               variant="outline"
               size="sm"
               onClick={() =>
-                start.mutate(scan.id, {
+                start.mutate(scan.instance_id || scan.id, {
                   onSuccess: (res) => {
                     if (res.instance_id) {
                       navigate(`/scans/${res.instance_id}`);

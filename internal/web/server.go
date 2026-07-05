@@ -3116,7 +3116,44 @@ func (s *Server) handleInstanceAction(w http.ResponseWriter, r *http.Request) {
 	s.instancesMu.RLock()
 	inst, ok := s.instances[instanceID]
 	s.instancesMu.RUnlock()
+
 	if !ok {
+		if len(parts) >= 2 && parts[1] == "start" && r.Method == http.MethodPost {
+			_, rec := s.findScanByID(instanceID)
+			if rec == nil {
+				http.Error(w, "instance not found", http.StatusNotFound)
+				return
+			}
+			currentStatus := strings.ToLower(strings.TrimSpace(rec.Status))
+			if !canStartInstanceStatus(currentStatus) {
+				w.WriteHeader(http.StatusConflict)
+				_ = json.NewEncoder(w).Encode(map[string]string{
+					"error": "cannot start: instance is " + currentStatus,
+				})
+				return
+			}
+			targets := strings.Split(rec.Target, ", ")
+			req := ScanRequest{
+				Targets:        targets,
+				Instruction:    rec.Instruction,
+				ScanMode:       rec.ScanMode,
+				SeverityFilter: rec.SeverityFilter,
+				DiscordWebhook: rec.DiscordWebhook,
+				Name:           rec.Name,
+				Phases:         rec.Phases,
+				ReconMode:      rec.ReconMode,
+				ScanIntensity:  rec.ScanIntensity,
+				CompanyName:    rec.CompanyName,
+				LogoPath:       rec.LogoPath,
+			}
+			s.stopReq.Store(false)
+			scanCfg := *s.cfg
+			newID := randomSlug()
+			go s.runMultiScan(req, &scanCfg, newID)
+			s.broadcastDashboard(WSEvent{Type: "instance_updated", Content: instanceID})
+			_ = json.NewEncoder(w).Encode(map[string]string{"status": "started", "instance_id": newID})
+			return
+		}
 		http.Error(w, "instance not found", http.StatusNotFound)
 		return
 	}
