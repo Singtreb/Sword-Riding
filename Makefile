@@ -2,7 +2,7 @@
 
 BINARY=Sword-Riding
 BUILD_DIR=./build
-VERSION=1.3
+VERSION=1.1
 LDFLAGS=-ldflags "-s -w -X main.version=$(VERSION)"
 
 webui/node_modules: webui/package.json
