@@ -470,6 +470,12 @@ function RowActionMenu({
               Download PDF
             </a>
           </DropdownMenu.Item>
+          <DropdownMenu.Item asChild className={menuItemClass}>
+            <a href={`/api/report/${scan.id}?format=md`} target="_blank" rel="noreferrer">
+              <Download className="h-3.5 w-3.5" />
+              Download MD
+            </a>
+          </DropdownMenu.Item>
           <DropdownMenu.Separator className="-mx-1 my-1 h-px bg-border" />
           <DropdownMenu.Item
             disabled={deleting}

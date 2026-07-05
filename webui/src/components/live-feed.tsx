@@ -17,11 +17,11 @@ export type FeedFilter =
   | "llm";
 
 const FILTERS: { key: FeedFilter; label: string }[] = [
-  { key: "all", label: "All" },
-  { key: "tools", label: "Tools" },
-  { key: "findings", label: "Findings" },
-  { key: "errors", label: "Errors" },
-  { key: "agent", label: "Agent" },
+  { key: "all", label: "全部" },
+  { key: "tools", label: "工具" },
+  { key: "findings", label: "发现" },
+  { key: "errors", label: "错误" },
+  { key: "agent", label: "代理" },
   { key: "http", label: "HTTP" },
   { key: "llm", label: "LLM" },
 ];
@@ -255,14 +255,15 @@ export function LiveFeed({
               variant="ghost"
               onClick={() => setPaused(!paused)}
               className="h-7 px-2"
+              title="暂停/恢复事件流显示"
             >
               {paused ? (
                 <>
-                  <Play className="h-3.5 w-3.5" /> Resume
+                  <Play className="h-3.5 w-3.5" /> 恢复
                 </>
               ) : (
                 <>
-                  <Pause className="h-3.5 w-3.5" /> Pause
+                  <Pause className="h-3.5 w-3.5" /> 暂停
                 </>
               )}
             </Button>
@@ -271,8 +272,9 @@ export function LiveFeed({
               variant="ghost"
               onClick={onClearEvents ?? clearEvents}
               className="h-7 px-2"
+              title="清空事件列表"
             >
-              <Trash2 className="h-3.5 w-3.5" /> Clear
+              <Trash2 className="h-3.5 w-3.5" /> 清空
             </Button>
           </div>
         </div>
@@ -315,15 +317,16 @@ function FeedExportMenu({
           variant="ghost"
           disabled={disabled}
           className="h-7 px-2"
-          aria-label={`Export ${visibleCount} live feed events`}
+          aria-label={`导出 ${visibleCount} 个事件`}
+          title="导出事件日志（JSON/JSONL/文本格式）"
         >
-          <Download className="h-3.5 w-3.5" /> Export
+          <Download className="h-3.5 w-3.5" /> 导出
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content align="end" className={menuContentClass}>
           <DropdownMenu.Label className="px-2 py-1.5 text-xs text-muted-foreground">
-            {visibleCount} visible events
+            {visibleCount} 个可见事件
           </DropdownMenu.Label>
           <DropdownMenu.Separator className="-mx-1 my-1 h-px bg-border" />
           <DropdownMenu.Item
@@ -331,21 +334,21 @@ function FeedExportMenu({
             onSelect={() => onExport("json")}
           >
             <Download className="h-3.5 w-3.5" />
-            JSON
+            JSON（结构化）
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={menuItemClass}
             onSelect={() => onExport("jsonl")}
           >
             <Download className="h-3.5 w-3.5" />
-            JSONL
+            JSONL（每行一条）
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={menuItemClass}
             onSelect={() => onExport("txt")}
           >
             <FileText className="h-3.5 w-3.5" />
-            Transcript
+            文本转录
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

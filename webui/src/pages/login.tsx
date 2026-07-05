@@ -79,10 +79,12 @@ export default function LoginPage() {
 
   return (
     <div className="grid min-h-screen w-full bg-background lg:grid-cols-2">
-      <div className="hidden flex-col justify-between border-r border-border bg-muted/30 p-12 lg:flex">
+      <div className="hidden flex-col justify-between border-r border-border bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-12 lg:flex">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="Xalgorix" className="h-8 w-8 rounded-md" />
-          <span className="font-mono text-sm font-semibold tracking-tight">XALGORIX</span>
+          <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-md bg-primary">
+            <img src="/logo.png" alt="Sword-Riding" className="h-full w-full object-cover" />
+          </div>
+          <span className="font-mono text-sm font-semibold tracking-tight text-primary">Sword-Riding</span>
         </div>
         <div className="space-y-6">
           <div className="space-y-2">
@@ -100,24 +102,26 @@ export default function LoginPage() {
             <Stat label="覆盖率" value="98.4%" />
           </dl>
         </div>
-        <p className="text-xs text-muted-foreground">© Xalgorix · 仅供内部使用</p>
+        <p className="text-xs text-muted-foreground">© Sword-Riding · 仅供内部使用</p>
       </div>
 
       <div className="flex items-center justify-center p-6 sm:p-12">
         <div className="w-full max-w-sm">
           <div className="mb-8 flex items-center gap-3 lg:hidden">
-            <img src="/logo.png" alt="Xalgorix" className="h-8 w-8 rounded-md" />
-            <span className="font-mono text-sm font-semibold tracking-tight">XALGORIX</span>
+            <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-md bg-primary">
+              <img src="/logo.png" alt="Sword-Riding" className="h-full w-full object-cover" />
+            </div>
+            <span className="font-mono text-sm font-semibold tracking-tight text-primary">Sword-Riding</span>
           </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>登录</CardTitle>
-              <CardDescription>操作员控制台访问</CardDescription>
+          <Card className="shadow-lg border-border/50 bg-white">
+            <CardHeader className="text-center pb-2">
+              <CardTitle className="text-xl font-semibold">登录</CardTitle>
+              <CardDescription className="text-muted-foreground">操作员控制台访问</CardDescription>
             </CardHeader>
-            <CardContent>
-              <form onSubmit={onSubmit} className="space-y-4">
+            <CardContent className="pt-4">
+              <form onSubmit={onSubmit} className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="username">用户名</Label>
+                  <Label htmlFor="username" className="text-sm font-medium">用户名</Label>
                   <Input
                     id="username"
                     autoComplete="username"
@@ -125,10 +129,12 @@ export default function LoginPage() {
                     onChange={(e) => setUsername(e.target.value)}
                     required
                     autoFocus
+                    className="h-11 px-4 border-border/60 bg-background hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                    placeholder="请输入用户名"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">密码</Label>
+                  <Label htmlFor="password" className="text-sm font-medium">密码</Label>
                   <Input
                     id="password"
                     type="password"
@@ -136,15 +142,21 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    className="h-11 px-4 border-border/60 bg-background hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                    placeholder="请输入密码"
                   />
                 </div>
                 {error && (
-                  <div className="flex items-start gap-2 rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+                  <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
                     <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                     <span>{error}</span>
                   </div>
                 )}
-                <Button type="submit" className="w-full" disabled={loading}>
+                <Button 
+                  type="submit" 
+                  className="w-full h-11 text-base font-medium bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200" 
+                  disabled={loading}
+                >
                   {loading ? "登录中…" : "登录"}
                 </Button>
               </form>

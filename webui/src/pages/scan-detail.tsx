@@ -28,6 +28,8 @@ import { ErrorState, EmptyState } from "@/components/states";
 import {
   useScan,
   useStopInstance,
+  usePauseInstance,
+  useResumeInstance,
   useStartSavedInstance,
   useDeleteScan,
   useDeleteVuln,
@@ -57,6 +59,7 @@ import {
   MoreHorizontal,
   X,
   Play,
+  Pause,
   Trash2,
   ShieldAlert,
   Terminal,
@@ -74,6 +77,8 @@ export default function ScanDetailPage() {
   const id = scanId ?? "";
   const { data: scan, isLoading, isFetching, error, refetch } = useScan(id);
   const stop = useStopInstance();
+  const pause = usePauseInstance();
+  const resume = useResumeInstance();
   const start = useStartSavedInstance();
   const del = useDeleteScan();
   const subscribe = useWSStore((s) => s.subscribe);
@@ -118,6 +123,8 @@ export default function ScanDetailPage() {
     );
 
   const status = (scan.status || "").toLowerCase();
+  const canPause = status === "running";
+  const canResume = status === "paused";
   const canStop = status === "running" || status === "paused";
   const canStart =
     status === "saved" ||
@@ -175,11 +182,34 @@ export default function ScanDetailPage() {
 
         <div className="flex flex-wrap items-center gap-2">
           <ScanStatusPill status={scan.status} />
-          <Button variant="outline" size="sm" asChild>
-            <a href={api.reportUrl(scan.id)} target="_blank" rel="noreferrer">
-              <Download className="mr-1 h-4 w-4" /> Report
-            </a>
-          </Button>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild>
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <Download className="h-4 w-4" />
+                <span>报告</span>
+              </Button>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content align="end" className={menuContentClass}>
+                <DropdownMenu.Label className="px-2 py-1.5 text-xs text-muted-foreground">
+                  导出报告
+                </DropdownMenu.Label>
+                <DropdownMenu.Separator className="-mx-1 my-1 h-px bg-border" />
+                <DropdownMenu.Item asChild className={menuItemClass}>
+                  <a href={api.reportUrl(scan.id)} target="_blank" rel="noreferrer">
+                    <Download className="h-3.5 w-3.5" />
+                    PDF 格式
+                  </a>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item asChild className={menuItemClass}>
+                  <a href={`${api.reportUrl(scan.id)}?format=md`} target="_blank" rel="noreferrer">
+                    <Download className="h-3.5 w-3.5" />
+                    MD 格式（含详细PoC）
+                  </a>
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
           {canStart && (
             <Button
               variant="outline"
@@ -196,27 +226,55 @@ export default function ScanDetailPage() {
                 })
               }
               disabled={start.isPending}
+              className="gap-1.5"
             >
-              <Play className="mr-1 h-4 w-4" /> Start
+              <Play className="h-4 w-4" />
+              <span>开始</span>
+            </Button>
+          )}
+          {canPause && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => pause.mutate(scan.instance_id || scan.id)}
+              disabled={pause.isPending}
+              className="gap-1.5"
+            >
+              <Pause className="h-4 w-4" />
+              <span>暂停</span>
+            </Button>
+          )}
+          {canResume && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => resume.mutate(scan.instance_id || scan.id)}
+              disabled={resume.isPending}
+              className="gap-1.5"
+            >
+              <Play className="h-4 w-4" />
+              <span>恢复</span>
             </Button>
           )}
           {canStop && (
             <Button
               variant="outline"
               size="sm"
-              onClick={() => stop.mutate(scan.id)}
+              onClick={() => stop.mutate(scan.instance_id || scan.id)}
               disabled={stop.isPending}
+              className="gap-1.5"
             >
-              <X className="mr-1 h-4 w-4" /> Stop
+              <X className="h-4 w-4" />
+              <span>停止</span>
             </Button>
           )}
           <Button
-            variant="ghost"
+            variant="destructive"
             size="sm"
             onClick={() => {
               if (
                 window.confirm(
-                  "Permanently delete this scan and all its events?",
+                  "确定永久删除此扫描及其所有事件？",
                 )
               ) {
                 del.mutate(scan.id, {
@@ -227,8 +285,10 @@ export default function ScanDetailPage() {
               }
             }}
             disabled={del.isPending}
+            className="gap-1.5"
           >
-            <Trash2 className="mr-1 h-4 w-4" /> Delete
+            <Trash2 className="h-4 w-4" />
+            <span>删除</span>
           </Button>
         </div>
       </header>
@@ -236,10 +296,10 @@ export default function ScanDetailPage() {
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-sm">Phase progress</CardTitle>
+            <CardTitle className="text-sm">阶段进度</CardTitle>
             <CardDescription>
-              Xalgorix runs a {PHASES.length}-phase autonomous methodology.
-              Currently:{" "}
+              Xalgorix 运行 {PHASES.length} 阶段的自动化方法论。
+              当前阶段：{" "}
               <span className="text-foreground">
                 {currentPhaseLabel(scan.current_phase)}
               </span>
@@ -279,9 +339,9 @@ export default function ScanDetailPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm">Risk overview</CardTitle>
+            <CardTitle className="text-sm">风险概览</CardTitle>
             <CardDescription>
-              {(scan.vulns ?? []).length} findings
+              {(scan.vulns ?? []).length} 个发现
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -315,21 +375,21 @@ export default function ScanDetailPage() {
         <TabsList>
           <TabsTrigger value="findings">
             <ShieldAlert className="mr-1.5 h-3.5 w-3.5" />
-            Findings
+            发现
           </TabsTrigger>
           <TabsTrigger value="events">
             <Terminal className="mr-1.5 h-3.5 w-3.5" />
-            Events
+            事件
           </TabsTrigger>
           {!!scan.sub_scan_total && (
             <TabsTrigger value="subdomains">
               <ListChecks className="mr-1.5 h-3.5 w-3.5" />
-              Subdomains
+              子域名
             </TabsTrigger>
           )}
           <TabsTrigger value="config">
             <ListChecks className="mr-1.5 h-3.5 w-3.5" />
-            Config
+            配置
           </TabsTrigger>
         </TabsList>
 
@@ -460,19 +520,28 @@ function RiskBreakdown({ vulns }: { vulns: VulnSummary[] }) {
       {/* Severity legend. Horizontal-scroll on very narrow widths so the
           five labels never overlap; wide enough to read at all sizes. */}
       <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1 text-[11px]">
-        {order.map((sev) => (
-          <div
-            key={sev}
-            className="flex min-w-[60px] flex-1 flex-col rounded-md border border-border bg-muted/20 px-2 py-1.5"
-          >
-            <span className="truncate uppercase tracking-wide text-muted-foreground">
-              {sev}
-            </span>
-            <span className="mono text-base leading-tight text-foreground">
-              {counts[sev as string]}
-            </span>
-          </div>
-        ))}
+        {order.map((sev) => {
+          const sevNames: Record<string, string> = {
+            critical: "严重",
+            high: "高危",
+            medium: "中危",
+            low: "低危",
+            info: "信息",
+          };
+          return (
+            <div
+              key={sev}
+              className="flex min-w-[60px] flex-1 flex-col rounded-md border border-border bg-muted/20 px-2 py-1.5"
+            >
+              <span className="truncate tracking-wide text-muted-foreground">
+                {sevNames[sev]}
+              </span>
+              <span className="mono text-base leading-tight text-foreground">
+                {counts[sev as string]}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -339,21 +339,21 @@ export default function SettingsPage() {
     <div className="space-y-6">
       <header className="space-y-1">
         <h1 className="font-sans text-2xl font-semibold tracking-tight">
-          Settings
+          设置
         </h1>
         <p className="text-sm text-muted-foreground">
-          LLM provider, environment variables, integrations, and account access.
+          LLM 提供者、环境变量、集成和账户访问。
         </p>
       </header>
 
       <Tabs value={activeTab} onValueChange={changeTab}>
         <TabsList className="flex h-auto flex-wrap">
-          <TabsTrigger value="llm">LLM</TabsTrigger>
-          <TabsTrigger value="engagement">Engagement</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
+          <TabsTrigger value="llm">LLM 设置</TabsTrigger>
+          <TabsTrigger value="engagement">扫描频率</TabsTrigger>
+          <TabsTrigger value="notifications">通知设置</TabsTrigger>
           <TabsTrigger value="email">AgentMail</TabsTrigger>
-          <TabsTrigger value="environment">Environment</TabsTrigger>
-          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="environment">环境变量</TabsTrigger>
+          <TabsTrigger value="account">账户</TabsTrigger>
         </TabsList>
 
         <TabsContent value="llm">
@@ -361,26 +361,26 @@ export default function SettingsPage() {
             <Skeleton className="h-96" />
           ) : llm.error ? (
             <ErrorState
-              title="Failed to load LLM settings"
-              description={llm.error instanceof Error ? llm.error.message : "Unknown error"}
+              title="加载 LLM 设置失败"
+              description={llm.error instanceof Error ? llm.error.message : "未知错误"}
               action={
                 <Button size="sm" variant="outline" onClick={() => llm.refetch()}>
-                  Retry
+                  重试
                 </Button>
               }
             />
           ) : (
             <Card>
               <CardHeader>
-                <CardTitle>LLM provider</CardTitle>
+                <CardTitle>LLM 提供者</CardTitle>
                 <CardDescription>
-                  Saved to {llmForm.envFile || "~/.xalgorix.env"} and used by new scans.
+                  保存到 {llmForm.envFile || "~/.xalgorix.env"} 并用于新扫描。
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
                 <div className="grid gap-3 lg:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="llm-provider">Provider</Label>
+                    <Label htmlFor="llm-provider">提供者</Label>
                     <Select
                       value={llmForm.provider || "__unset__"}
                       onValueChange={(value) =>
@@ -388,10 +388,10 @@ export default function SettingsPage() {
                       }
                     >
                       <SelectTrigger id="llm-provider">
-                        <SelectValue placeholder="Select a provider" />
+                        <SelectValue placeholder="选择提供者" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="__unset__">Not selected</SelectItem>
+                        <SelectItem value="__unset__">未选择</SelectItem>
                         {sortedProviders.map((provider) => (
                           <SelectItem key={provider.id} value={provider.id}>
                             {provider.displayName}
@@ -402,7 +402,7 @@ export default function SettingsPage() {
                   </div>
                   {selectedProvider && availableAuthMethods.length > 1 && (
                     <div className="space-y-2">
-                      <Label>Authentication method</Label>
+                      <Label>认证方式</Label>
                       <div className="flex flex-wrap gap-2 rounded-md border border-border bg-muted/30 p-1">
                         {availableAuthMethods.map((method) => (
                           <Button
@@ -437,22 +437,22 @@ export default function SettingsPage() {
                 {selectedProvider && llmForm.authMethod === "api_key" && (
                   <div className="grid gap-3 lg:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="llm-api-key">API key</Label>
+                      <Label htmlFor="llm-api-key">API 密钥</Label>
                       <Input
                         id="llm-api-key"
                         value={llmForm.apiKey}
                         onChange={(e) =>
                           setLLMForm({ ...llmForm, apiKey: e.target.value })
                         }
-                        placeholder={llmForm.hasApiKey ? "**** (saved)" : "sk-..."}
+                        placeholder={llmForm.hasApiKey ? "**** (已保存)" : "sk-..."}
                         className="font-mono"
                       />
                       <p className="text-xs text-muted-foreground">
-                        Keep the masked value to preserve the saved key.
+                        保持掩码值以保留已保存的密钥。
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="llm-model">Model</Label>
+                      <Label htmlFor="llm-model">模型</Label>
                       <Input
                         id="llm-model"
                         value={llmForm.model}
@@ -466,7 +466,7 @@ export default function SettingsPage() {
                     {selectedProvider.id === "custom" ? (
                       <>
                         <div className="space-y-2">
-                          <Label htmlFor="llm-api-base">Base URL</Label>
+                          <Label htmlFor="llm-api-base">基础 URL</Label>
                           <Input
                             id="llm-api-base"
                             value={llmForm.apiBase}
@@ -478,7 +478,7 @@ export default function SettingsPage() {
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="llm-header-style">Header style</Label>
+                          <Label htmlFor="llm-header-style">请求头格式</Label>
                           <Select
                             value={llmForm.apiBase ? "openai" : "openai"}
                             onValueChange={() => {}}
@@ -494,14 +494,14 @@ export default function SettingsPage() {
                             </SelectContent>
                           </Select>
                           <p className="text-xs text-muted-foreground">
-                            Custom providers default to OpenAI-shaped requests. Switch this from the Environment tab if your endpoint speaks Anthropic or Gemini.
+                            自定义提供者默认使用 OpenAI 格式请求。如果您的端点使用 Anthropic 或 Gemini，请在环境变量标签页中切换。
                           </p>
                         </div>
                       </>
                     ) : (
                       <div className="space-y-2 lg:col-span-2">
                         <Label htmlFor="llm-api-base-override">
-                          API base override (optional)
+                          API 基础地址覆盖（可选）
                         </Label>
                         <Input
                           id="llm-api-base-override"
@@ -516,7 +516,7 @@ export default function SettingsPage() {
                           className="font-mono"
                         />
                         <p className="text-xs text-muted-foreground">
-                          Leave blank to use the provider default.
+                          留空使用提供者默认值。
                         </p>
                       </div>
                     )}
@@ -526,20 +526,18 @@ export default function SettingsPage() {
                 {selectedProvider && llmForm.authMethod === "oauth" && (
                   <div className="space-y-3 rounded-md border border-border bg-muted/30 p-4">
                     <p className="text-sm">
-                      Sign in with {selectedProvider.displayName} to create a
-                      new OAuth profile. The dashboard polls until the new
-                      credential appears in the saved list below.
+                      使用 {selectedProvider.displayName} 登录以创建新的 OAuth 配置文件。仪表板会轮询直到新凭证出现在下面的保存列表中。
                     </p>
                     <Button
                       type="button"
                       onClick={() => setOAuthOpen(true)}
                       disabled={!selectedProvider.flow}
                     >
-                      Sign in with OAuth
+                      使用 OAuth 登录
                     </Button>
                     {!selectedProvider.flow && (
                       <p className="text-xs text-muted-foreground">
-                        OAuth is not configured for this provider yet.
+                        此提供者尚未配置 OAuth。
                       </p>
                     )}
                   </div>
@@ -548,11 +546,10 @@ export default function SettingsPage() {
                 {selectedProvider && llmForm.authMethod === "none" && (
                   <div className="space-y-3 rounded-md border border-border bg-muted/30 p-4">
                     <p className="text-sm">
-                      {selectedProvider.displayName} runs locally — no
-                      credential required. Just confirm the model below.
+                      {selectedProvider.displayName} 运行在本地 — 无需凭证。只需确认下方的模型即可。
                     </p>
                     <div className="space-y-2">
-                      <Label htmlFor="llm-model-local">Model</Label>
+                      <Label htmlFor="llm-model-local">模型</Label>
                       <Input
                         id="llm-model-local"
                         value={llmForm.model}
@@ -569,7 +566,7 @@ export default function SettingsPage() {
                 {/* Saved-credentials picker for the active provider. */}
                 {selectedProvider && providerProfiles.length > 0 && (
                   <div className="space-y-2">
-                    <Label>Saved credentials</Label>
+                    <Label>已保存凭证</Label>
                     <div className="divide-y divide-border rounded-md border border-border">
                       {providerProfiles.map((profile) => {
                         const key =
@@ -591,7 +588,7 @@ export default function SettingsPage() {
                                 {profile.requiresReauth && (
                                   <Badge variant="warning">
                                     <AlertTriangle className="mr-1 h-3 w-3" />
-                                    re-auth required
+                                    需要重新认证
                                   </Badge>
                                 )}
                               </div>
@@ -602,7 +599,7 @@ export default function SettingsPage() {
                               </div>
                               {profile.expiresAt && (
                                 <div className="text-xs text-muted-foreground">
-                                  expires {profile.expiresAt}
+                                  过期时间 {profile.expiresAt}
                                 </div>
                               )}
                             </div>
@@ -614,7 +611,7 @@ export default function SettingsPage() {
                                   disabled={updateLLM.isPending}
                                   onClick={() => setActiveProfile(profile)}
                                 >
-                                  Set active
+                                  设置为活跃
                                 </Button>
                               )}
                               {profile.type === "oauth" && (
@@ -651,7 +648,7 @@ export default function SettingsPage() {
                     of provider / auth method. */}
                 <div className="grid gap-3 lg:grid-cols-4">
                   <div className="space-y-2">
-                    <Label htmlFor="llm-retries">LLM max retries</Label>
+                    <Label htmlFor="llm-retries">LLM 最大重试次数</Label>
                     <Input
                       id="llm-retries"
                       type="number"
@@ -667,7 +664,7 @@ export default function SettingsPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="llm-memory-timeout">Memory timeout</Label>
+                    <Label htmlFor="llm-memory-timeout">内存压缩超时</Label>
                     <Input
                       id="llm-memory-timeout"
                       type="number"
@@ -683,7 +680,7 @@ export default function SettingsPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="llm-max-iterations">Max iterations</Label>
+                    <Label htmlFor="llm-max-iterations">最大迭代次数</Label>
                     <Input
                       id="llm-max-iterations"
                       type="number"
@@ -699,7 +696,7 @@ export default function SettingsPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="gemini-api-key">Gemini search key</Label>
+                    <Label htmlFor="gemini-api-key">Gemini 搜索密钥</Label>
                     <Input
                       id="gemini-api-key"
                       value={llmForm.geminiApiKey}
@@ -707,7 +704,7 @@ export default function SettingsPage() {
                         setLLMForm({ ...llmForm, geminiApiKey: e.target.value })
                       }
                       placeholder={
-                        llmForm.hasGeminiApiKey ? "**** (saved)" : "AIza..."
+                        llmForm.hasGeminiApiKey ? "**** (已保存)" : "AIza..."
                       }
                       className="font-mono"
                     />
@@ -716,7 +713,7 @@ export default function SettingsPage() {
 
                 <div className="grid gap-3 lg:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>Reasoning effort</Label>
+                    <Label>推理强度</Label>
                     <Select
                       value={llmForm.reasoningEffort || "high"}
                       onValueChange={(value) =>
@@ -729,7 +726,7 @@ export default function SettingsPage() {
                       <SelectContent>
                         {["low", "medium", "high", "xhigh"].map((value) => (
                           <SelectItem key={value} value={value}>
-                            {value}
+                            {value === "low" ? "低" : value === "medium" ? "中" : value === "high" ? "高" : "极高"}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -739,12 +736,12 @@ export default function SettingsPage() {
 
                 <Separator />
                 <div className="flex items-center justify-end gap-3">
-                  {savedLLM && <span className="text-xs text-success">Saved</span>}
+                  {savedLLM && <span className="text-xs text-success">已保存</span>}
                   <Button
                     onClick={saveLLMSettings}
                     disabled={updateLLM.isPending || !llmForm.provider}
                   >
-                    {updateLLM.isPending ? "Saving..." : "Save LLM settings"}
+                    {updateLLM.isPending ? "保存中..." : "保存 LLM 设置"}
                   </Button>
                 </div>
               </CardContent>
@@ -772,26 +769,26 @@ export default function SettingsPage() {
             <Skeleton className="h-72" />
           ) : rate.error ? (
             <ErrorState
-              title="Failed to load rate limits"
-              description={rate.error instanceof Error ? rate.error.message : "Unknown error"}
+              title="加载速率限制失败"
+              description={rate.error instanceof Error ? rate.error.message : "未知错误"}
               action={
                 <Button size="sm" variant="outline" onClick={() => rate.refetch()}>
-                  Retry
+                  重试
                 </Button>
               }
             />
           ) : (
             <Card>
               <CardHeader>
-                <CardTitle>Rate limits</CardTitle>
+                <CardTitle>速率限制</CardTitle>
                 <CardDescription>
-                  Applied to outbound requests issued by the agent and persisted to the env file.
+                  应用于代理发出的出站请求，并持久化到环境变量文件。
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="requests">Requests per window</Label>
+                    <Label htmlFor="requests">每窗口期请求数</Label>
                     <Input
                       id="requests"
                       type="number"
@@ -807,7 +804,7 @@ export default function SettingsPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="window">Window (seconds)</Label>
+                    <Label htmlFor="window">窗口期（秒）</Label>
                     <Input
                       id="window"
                       type="number"
@@ -825,7 +822,7 @@ export default function SettingsPage() {
                 </div>
                 <div className="flex items-center justify-end gap-3">
                   {savedRate && (
-                    <span className="text-xs text-success">Saved</span>
+                    <span className="text-xs text-success">已保存</span>
                   )}
                   <Button
                     onClick={async () => {
@@ -836,7 +833,7 @@ export default function SettingsPage() {
                     }}
                     disabled={updateRate.isPending}
                   >
-                    {updateRate.isPending ? "Saving..." : "Save"}
+                    {updateRate.isPending ? "保存中..." : "保存"}
                   </Button>
                 </div>
               </CardContent>
@@ -849,20 +846,20 @@ export default function SettingsPage() {
             <Skeleton className="h-72" />
           ) : environment.error ? (
             <ErrorState
-              title="Failed to load notification settings"
-              description={environment.error instanceof Error ? environment.error.message : "Unknown error"}
+              title="加载通知设置失败"
+              description={environment.error instanceof Error ? environment.error.message : "未知错误"}
               action={
                 <Button size="sm" variant="outline" onClick={() => environment.refetch()}>
-                  Retry
+                  重试
                 </Button>
               }
             />
           ) : (
             <Card>
               <CardHeader>
-                <CardTitle>Discord notifications</CardTitle>
+                <CardTitle>Discord 通知</CardTitle>
                 <CardDescription>
-                  Global defaults used unless a scan provides its own webhook.
+                  全局默认值，除非扫描提供自己的 webhook。
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
@@ -882,11 +879,11 @@ export default function SettingsPage() {
                       className="font-mono"
                     />
                     <p className="text-xs text-muted-foreground">
-                      Keep the masked value to preserve the saved webhook.
+                      保持掩码值以保留已保存的 webhook。
                     </p>
                   </div>
                   <div className="space-y-2">
-                    <Label>Minimum severity</Label>
+                    <Label>最低严重性</Label>
                     <Select
                       value={notificationForm.minSeverity || "__unset__"}
                       onValueChange={(value) =>
@@ -900,10 +897,10 @@ export default function SettingsPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="__unset__">Default</SelectItem>
+                        <SelectItem value="__unset__">默认</SelectItem>
                         {["info", "low", "medium", "high", "critical"].map((value) => (
                           <SelectItem key={value} value={value}>
-                            {value}
+                            {value === "info" ? "信息" : value === "low" ? "低危" : value === "medium" ? "中危" : value === "high" ? "高危" : "严重"}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -913,7 +910,7 @@ export default function SettingsPage() {
                 <Separator />
                 <div className="flex items-center justify-end gap-3">
                   {savedNotifications && (
-                    <span className="text-xs text-success">Saved</span>
+                    <span className="text-xs text-success">已保存</span>
                   )}
                   <Button
                     onClick={async () => {
@@ -927,7 +924,7 @@ export default function SettingsPage() {
                     }}
                     disabled={updateEnvironment.isPending}
                   >
-                    {updateEnvironment.isPending ? "Saving..." : "Save notifications"}
+                    {updateEnvironment.isPending ? "保存中..." : "保存通知设置"}
                   </Button>
                 </div>
               </CardContent>
@@ -940,11 +937,11 @@ export default function SettingsPage() {
             <Skeleton className="h-72" />
           ) : mail.error ? (
             <ErrorState
-              title="Failed to load AgentMail settings"
-              description={mail.error instanceof Error ? mail.error.message : "Unknown error"}
+              title="加载 AgentMail 设置失败"
+              description={mail.error instanceof Error ? mail.error.message : "未知错误"}
               action={
                 <Button size="sm" variant="outline" onClick={() => mail.refetch()}>
-                  Retry
+                  重试
                 </Button>
               }
             />
@@ -953,7 +950,7 @@ export default function SettingsPage() {
               <CardHeader>
                 <CardTitle>AgentMail</CardTitle>
                 <CardDescription>
-                  Inbound triage requires a configured pod and API key.
+                  入站分类需要配置的 pod 和 API 密钥。
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
@@ -970,24 +967,24 @@ export default function SettingsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="apikey">API key</Label>
+                  <Label htmlFor="apikey">API 密钥</Label>
                   <Input
                     id="apikey"
                     value={mailForm.apiKey}
                     onChange={(e) =>
                       setMailForm({ ...mailForm, apiKey: e.target.value })
                     }
-                    placeholder={mail.data?.hasApiKey ? "**** (saved)" : "ak_..."}
+                    placeholder={mail.data?.hasApiKey ? "**** (已保存)" : "ak_..."}
                     className="font-mono"
                   />
                   <p className="text-xs text-muted-foreground">
-                    Leave masked value untouched to keep the existing key.
+                    保持掩码值不变以保留现有密钥。
                   </p>
                 </div>
                 <Separator />
                 <div className="flex items-center justify-end gap-3">
                   {savedMail && (
-                    <span className="text-xs text-success">Saved</span>
+                    <span className="text-xs text-success">已保存</span>
                   )}
                   <Button
                     onClick={async () => {
@@ -998,7 +995,7 @@ export default function SettingsPage() {
                     }}
                     disabled={updateMail.isPending}
                   >
-                    {updateMail.isPending ? "Saving..." : "Save"}
+                    {updateMail.isPending ? "保存中..." : "保存"}
                   </Button>
                 </div>
               </CardContent>
@@ -1011,11 +1008,11 @@ export default function SettingsPage() {
             <Skeleton className="h-96" />
           ) : environment.error ? (
             <ErrorState
-              title="Failed to load environment settings"
-              description={environment.error instanceof Error ? environment.error.message : "Unknown error"}
+              title="加载环境变量设置失败"
+              description={environment.error instanceof Error ? environment.error.message : "未知错误"}
               action={
                 <Button size="sm" variant="outline" onClick={() => environment.refetch()}>
-                  Retry
+                  重试
                 </Button>
               }
             />
@@ -1025,22 +1022,22 @@ export default function SettingsPage() {
                 <CardContent className="space-y-4 p-4">
                   <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                      <p className="text-sm font-medium">Environment variables</p>
+                      <p className="text-sm font-medium">环境变量</p>
                       <p className="mt-1 text-xs text-muted-foreground">
-                        Editing {environment.data?.envFile || "~/.xalgorix.env"}. Masked secrets are preserved unless you replace or clear them.
+                        编辑 {environment.data?.envFile || "~/.xalgorix.env"}。掩码的秘密除非替换或清除否则会保留。
                       </p>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
                       {envRestartRequired && (
-                        <Badge variant="warning">Restart required for some changes</Badge>
+                        <Badge variant="warning">部分更改需要重启</Badge>
                       )}
                       {Object.keys(envChanges).length > 0 && (
                         <Badge variant="outline">
-                          {Object.keys(envChanges).length} unsaved
+                          {Object.keys(envChanges).length} 未保存
                         </Badge>
                       )}
                       {savedEnvironment && (
-                        <span className="text-xs text-success">Saved</span>
+                        <span className="text-xs text-success">已保存</span>
                       )}
                       <Button
                         onClick={async () => {
@@ -1056,7 +1053,7 @@ export default function SettingsPage() {
                           Object.keys(envChanges).length === 0
                         }
                       >
-                        {updateEnvironment.isPending ? "Saving..." : "Save changes"}
+                        {updateEnvironment.isPending ? "保存中..." : "保存更改"}
                       </Button>
                     </div>
                   </div>
@@ -1065,7 +1062,7 @@ export default function SettingsPage() {
                     <Input
                       value={envFilter}
                       onChange={(e) => setEnvFilter(e.target.value)}
-                      placeholder="Search variables..."
+                      placeholder="搜索变量..."
                       className="pl-8"
                     />
                   </div>
@@ -1104,24 +1101,24 @@ export default function SettingsPage() {
         <TabsContent value="account">
           <Card>
             <CardHeader>
-              <CardTitle>Account</CardTitle>
-              <CardDescription>Session and access.</CardDescription>
+              <CardTitle>账户</CardTitle>
+              <CardDescription>会话和访问权限。</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-2 text-sm sm:grid-cols-2">
                 <Field
-                  label="Auth"
+                  label="认证"
                   value={
                     auth.data?.auth_enabled
                       ? auth.data.authenticated
-                        ? "Authenticated"
-                        : "Logged out"
-                      : "Disabled"
+                        ? "已认证"
+                        : "已登出"
+                      : "已禁用"
                   }
                 />
                 <Field
-                  label="Session"
-                  value={auth.data?.authenticated ? "Active" : "None"}
+                  label="会话"
+                  value={auth.data?.authenticated ? "活跃" : "无"}
                 />
               </div>
               {auth.data?.auth_enabled && (
@@ -1135,7 +1132,7 @@ export default function SettingsPage() {
                         navigate("/login", { replace: true });
                       }}
                     >
-                      Sign out
+                      登出
                     </Button>
                   </div>
                 </>
@@ -1164,10 +1161,10 @@ function EnvironmentRow({
       <div className="min-w-0 space-y-1">
         <div className="flex flex-wrap items-center gap-2">
           <p className="font-mono text-xs text-foreground">{variable.key}</p>
-          {changed && <Badge variant="outline">edited</Badge>}
-          {variable.requiresRestart && <Badge variant="warning">restart</Badge>}
+          {changed && <Badge variant="outline">已编辑</Badge>}
+          {variable.requiresRestart && <Badge variant="warning">需要重启</Badge>}
           {!variable.hasValue && variable.defaultValue && (
-            <Badge variant="muted">default {variable.defaultValue}</Badge>
+            <Badge variant="muted">默认 {variable.defaultValue}</Badge>
           )}
         </div>
         <p className="text-sm font-medium">{variable.label}</p>
@@ -1197,7 +1194,7 @@ function EnvironmentControl({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="__unset__">Default / unset</SelectItem>
+          <SelectItem value="__unset__">默认/未设置</SelectItem>
           <SelectItem value="true">true</SelectItem>
           <SelectItem value="false">false</SelectItem>
         </SelectContent>
@@ -1215,7 +1212,7 @@ function EnvironmentControl({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="__unset__">Default / unset</SelectItem>
+          <SelectItem value="__unset__">默认/未设置</SelectItem>
           {(variable.options ?? [])
             .filter((option) => option !== "")
             .map((option) => (
@@ -1292,11 +1289,11 @@ function isMaskedSettingValue(value: string): boolean {
 function prettyAuthMethod(method: string): string {
   switch (method) {
     case "api_key":
-      return "API key";
+      return "API 密钥";
     case "oauth":
       return "OAuth";
     case "none":
-      return "No credentials";
+      return "无需凭证";
     default:
       return method;
   }

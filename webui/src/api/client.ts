@@ -227,6 +227,10 @@ export const api = {
     http<WSEvent[]>(`/api/instances/${id}/events`),
   stopInstance: (id: string) =>
     http<{ status: string }>(`/api/instances/${id}/stop`, { method: "POST" }),
+  pauseInstance: (id: string) =>
+    http<{ status: string; instance_id: string }>(`/api/instances/${id}/pause`, { method: "POST" }),
+  resumeInstance: (id: string) =>
+    http<{ status: string; instance_id: string }>(`/api/instances/${id}/resume`, { method: "POST" }),
   restartInstance: (id: string) =>
     http<{ status: string }>(`/api/instances/${id}/restart`, {
       method: "POST",
