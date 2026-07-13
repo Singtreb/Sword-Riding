@@ -14,8 +14,15 @@ Self-hosted AI security testing with a local Web UI, live agent telemetry, verif
 </div>
 
 ---
+# 此产品计划从v1.5后新版本会全部打包至整合，此项目目前源码版本：v1.3
+## 包内更新
+```bash
+Sword-Riding --update
+```
+虽然重启服务即可
 
-## 快速安装
+
+## 快速安装（v1.5以下版本）
 
 ```bash
 git clone https://github.com/Singtreb/Sword-Riding.git
@@ -31,7 +38,7 @@ XALGORIX_LLM=minimax/MiniMax-M2.7
 XALGORIX_API_KEY=your_provider_api_key
 ```
 
-启动web界面:
+## 启动web界面:
 
 ```bash
 Sword-Riding --web
