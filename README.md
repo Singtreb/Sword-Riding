@@ -32,7 +32,7 @@ make build
 sudo install -m 755 build/Sword-Riding /usr/local/bin/Sword-Riding
 ```
 
-Create `~/.xalgorix.env`:
+创建 `~/.xalgorix.env`:
 
 ```bash
 XALGORIX_LLM=minimax/MiniMax-M2.7
@@ -48,12 +48,12 @@ Sword-Riding --web
 打开 `http://127.0.0.1:9137`.
 
 > [!IMPORTANT]
-> Use Xalgorix only on systems you own or have explicit permission to test.
+> Use Sword-Riding only on systems you own or have explicit permission to test.
 
 > [!TIP]
-> Prefer not to self-host? A fully managed version is available at [www.xalgorix.com](https://www.xalgorix.com/) — click-to-scan, no install or API keys required.
+> Prefer not to self-host? A fully managed version is available at [yu123sp.com](https://yu123sp.com/) — click-to-scan, no install or API keys required.
 
-## Contents
+## 目录
 
 - [Quick Start](#quick-start)
 - [Overview](#overview)
@@ -79,19 +79,19 @@ Sword-Riding --web
 - [License](#license)
 - [Links](#links)
 
-## Overview
+## 概述
 
-Xalgorix is a self-hosted AI security testing platform for authorized penetration testing and bug bounty workflows. It combines an LLM-driven agent, browser automation, terminal tooling, a 22-phase testing methodology, live WebSocket events, finding management, report generation, and integrations for AgentMail and Discord.
+Sword-Riding is a self-hosted AI security testing platform for authorized penetration testing and bug bounty workflows. It combines an LLM-driven agent, browser automation, terminal tooling, a 22-phase testing methodology, live WebSocket events, finding management, report generation, and integrations for AgentMail and Discord.
 
 The default experience is the Web UI. From one local dashboard you can start scans, monitor active runs, inspect findings, configure model/provider settings, manage environment variables, generate branded PDF reports, and delete or resume historical scans.
 
-## Screenshots
+## 截图
 
 | Overview dashboard                                      | Scan detail                                      | Findings                                      |
 | ------------------------------------------------------- | ------------------------------------------------ | --------------------------------------------- |
-| ![Xalgorix overview dashboard](assets/screenshot-1.png) | ![Xalgorix scan detail](assets/screenshot-2.png) | ![Xalgorix findings](assets/screenshot-3.png) |
+| ![Sword-Riding overview dashboard](assets/screenshot-1.png) | ![Sword-Riding scan detail](assets/screenshot-2.png) | ![Xalgorix findings](assets/screenshot-3.png) |
 
-## Features
+## 功能特性
 
 | Area           | Capabilities                                                                                                                |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------- |
@@ -104,9 +104,9 @@ The default experience is the Web UI. From one local dashboard you can start sca
 | Configuration  | Dashboard settings for LLM, AgentMail, Discord, proxy, runtime, browser, auth, rate limits, and resources.                  |
 | Runtime safety | Resource-aware instance limits and loopback-only binding unless external access is explicitly configured with auth.         |
 
-## Installation
+## 安装
 
-### Requirements
+### 要求
 
 | Requirement    | Notes                                                        |
 | -------------- | ------------------------------------------------------------ |
