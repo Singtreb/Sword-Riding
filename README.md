@@ -1,6 +1,4 @@
-<img width="2549" height="1403" alt="image" src="https://github.com/user-attachments/assets/4afd2f7e-261e-4f2f-af11-23327189b658" /><div align="center">
-
-![待添加图片](待添加)
+<img width="2549" height="1403" alt="image" src="[https://github.com/user-attachments/assets/4afd2f7e-261e-4f2f-af11-23327189b658](https://github.com/user-attachments/assets/21bc6400-5cad-4f41-a784-38241f9bfbe6)" /><div align="center">
 
 <br />
 
