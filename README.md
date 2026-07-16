@@ -1,4 +1,4 @@
-<div align="center">
+<img width="2549" height="1403" alt="image" src="https://github.com/user-attachments/assets/4afd2f7e-261e-4f2f-af11-23327189b658" /><div align="center">
 
 ![待添加图片](待添加)
 
@@ -82,13 +82,10 @@ Sword-Riding --web
 Sword-Riding 是一个自托管的 AI 安全测试平台，用于授权渗透测试和漏洞赏金工作流。它结合了 LLM 驱动的代理、浏览器自动化、终端工具、22 阶段测试方法论、实时 WebSocket 事件、发现管理、报告生成以及 AgentMail 和飞书通知集成。
 
 默认体验是 Web UI。从一个本地仪表板，您可以启动扫描、监控活动运行、检查发现、配置模型/提供商设置、管理环境变量、生成品牌化 PDF 报告以及删除或恢复历史扫描。
-
 ## 截图
-
 | 概览仪表板 | 扫描详情 | 发现 |
 | ------------------------------------------------------- | ------------------------------------------------ | --------------------------------------------- |
-| ![待添加图片](待添加) | ![待添加图片](待添加) | ![待添加图片](待添加) |
-
+| <img width="2549" height="1403" alt="1b25a6b3a61b4549b7e0696fc2e37b19" src="https://github.com/user-attachments/assets/21bc6400-5cad-4f41-a784-38241f9bfbe6" /> | <img width="2549" height="1403" alt="47647d08676a102ab50ad951c7dac813" src="https://github.com/user-attachments/assets/769a07e0-3db2-40e7-b885-3a8c4bed1e6a" /> | <img width="2549" height="1403" alt="47647d08676a102ab50ad951c7dac813" src="https://github.com/user-attachments/assets/f1fe7bb3-c297-4345-801b-5ddd5f726b40" /> |
 ## 功能特性
 
 | 领域 | 功能 |
